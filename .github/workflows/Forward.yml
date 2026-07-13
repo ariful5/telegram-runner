@@ -32,6 +32,15 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${{ secrets.PRIVATE_REPO_TOKEN }}@github.com/ariful5/Telegram.git
 
+      - name: Send daily weather update
+        env:
+          API_ID: ${{ secrets.API_ID }}
+          API_HASH: ${{ secrets.API_HASH }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          ADMIN_ID_1: ${{ secrets.ADMIN_ID_1 }}
+          ADMIN_ID_2: ${{ secrets.ADMIN_ID_2 }}
+        run: python weather_notifier.py
+
       - name: Run bot
         env:
           PYTHONUNBUFFERED: "1"
@@ -53,3 +62,4 @@ jobs:
           git diff --staged --quiet || git commit -m "Update state: last_id, keys"
           git pull --rebase || true
           git push
+          
